@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <otus.homework.customview.PieChart
-        android:id="@+id/pie_chart"
+    <otus.homework.customview.CategoryView
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:pie_description="@string/pie_description"
-        app:pie_label="@string/pie_title" />
-
+        app:chart_label="Категории трат"
+        app:chart_sum_overhead="6000" />
 </androidx.constraintlayout.widget.ConstraintLayout>

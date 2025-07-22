@@ -120,7 +120,7 @@ class PieChart @JvmOverloads constructor(
         val bundle = state as Bundle
         val savedState = bundle.getString(SAVED_STATE_VIEW_KEY)
         savedState?.let {
-            val viewState = Json.decodeFromString<SavedState>(it)
+            val viewState = Json.decodeFromString<SavedPiecesState>(it)
             this@PieChart.pieces = viewState.pieces
         }
         super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_KEY))
@@ -128,7 +128,7 @@ class PieChart @JvmOverloads constructor(
 
     override fun onSaveInstanceState(): Parcelable {
         val bundle = Bundle()
-        bundle.putString(SAVED_STATE_VIEW_KEY, Json.encodeToString(SavedState(pieces)))
+        bundle.putString(SAVED_STATE_VIEW_KEY, Json.encodeToString(SavedPiecesState(pieces)))
         bundle.putParcelable(INSTANCE_KEY, super.onSaveInstanceState())
         return bundle
     }

@@ -1,6 +1,7 @@
 package otus.homework.customview
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -27,11 +28,23 @@ data class PieData(
 )
 
 @Serializable
-data class SavedState(
+data class Category(
+    val color: Int,
+    val value: Double,
+    val name: String
+)
+
+@Serializable
+data class SavedPiecesState(
     val pieces: List<PieData>
 )
 
-fun List<PayloadData>.map(): List<PieData> {
+@Serializable
+data class SavedCategoryState(
+    val charts: List<Category>
+)
+
+fun List<PayloadData>.mapPieces(): List<PieData> {
     val totalSum = this.sumOf { it.amount }
     var startAngle = DEFAULT_ANGLE
 
@@ -46,6 +59,14 @@ fun List<PayloadData>.map(): List<PieData> {
         startAngle += sweepAngle
         data
     }
+}
+
+fun List<PayloadData>.mapCategories(): List<Category> = this.map {
+    Category(
+        name = it.name,
+        value = it.amount,
+        color = generateColor()
+    )
 }
 
 private fun generateColor(): Int {
@@ -64,3 +85,6 @@ fun Context.readData(): List<PayloadData> {
     val itemList: List<PayloadData> = gson.fromJson(str, listType)
     return itemList
 }
+
+val Int.px: Int
+    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
